@@ -14,9 +14,9 @@ module.exports = function(config) {
  
     // list of files / patterns to load in the browser
     files: [
+        "src/main/webapp/assets/bower_components/angular/angular.min.js",
         "src/main/webapp/assets/bower_components/angular-mocks/angular-mocks.js",
         "src/main/webapp/assets/bower_components/angular-route/angular-route.min.js",
-        "src/main/webapp/assets/bower_components/angular/angular.min.js",
         "src/main/webapp/assets/bower_components/angular-touch/angular-touch.min.js",
         "src/main/webapp/assets/bower_components/angular-resource/angular-resource.min.js",
         "src/main/webapp/assets/bower_components/angular-sanitize/angular-sanitize.min.js",
@@ -114,7 +114,9 @@ module.exports = function(config) {
         "src/main/webapp/app/shared/services/TopPostersService.js",
         "src/main/webapp/app/shared/services/UserSession.js",
         "src/main/webapp/app/shared/services/AuthenticationService.js",
-        "src/main/webapp/app/shared/topMenu/TopMenuController.js"
+        "src/main/webapp/app/shared/topMenu/TopMenuController.js",
+
+        "src/test/javascript/**/*.js"
     ],
 
 
@@ -133,7 +135,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['dots', 'progress', 'html'],
+    reporters: ['dots', 'progress' ],
 
 
     htmlReporter: {
