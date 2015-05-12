@@ -1,7 +1,6 @@
 TatamiApp.factory('StatusService', ['$resource', function($resource) {
     var responseTransform = function(statuses) {
         statuses = angular.fromJson(statuses);
-
         for(var i = 0; i < statuses.length; i++) {
             statuses[i]['avatarURL'] = statuses[i].avatar==='' ? '/assets/img/default_image_profile.png' : '/tatami/avatar/' + statuses[i].avatar + '/photo.jpg';
 

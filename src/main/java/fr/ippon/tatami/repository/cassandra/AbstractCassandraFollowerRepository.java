@@ -28,7 +28,7 @@ public abstract class AbstractCassandraFollowerRepository {
 
     @PostConstruct
     public void init() {
-        template = new ThriftColumnFamilyTemplate<String, String>(keyspaceOperator,
+        template = new ThriftColumnFamilyTemplate<>(keyspaceOperator,
                 getFollowersCF(),
                 StringSerializer.get(),
                 StringSerializer.get());
