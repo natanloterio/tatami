@@ -122,12 +122,9 @@ module.exports = function(grunt) {
                     'src/main/webapp/css/CSSMIN.css': [
                         "src/main/webapp/assets/bower_components/ngtoast/dist/ngToast.min.css",
                         "src/main/webapp/assets/vendor/css/bootstrap/css/bootstrap.css",
-                        "src/main/webapp/assets/css/ie-only.css",
                         "src/main/webapp/assets/bower_components/ment.io/ment.io/styles.css",
                         "src/main/webapp/assets/bower_components/bootstrap-tour/build/css/bootstrap-tour.css"
-
-                    ],
-                    'src/main/webapp/css/tatami.min.css':["src/main/webapp/css/tatami.css"]
+                    ]
                 }
             }
         }
