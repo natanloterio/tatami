@@ -406,6 +406,7 @@
 
         <!--Test configurations: Sonar, unit test, code coverage --> 
 
+        <project.npm.bin>${project.basedir}/node_modules/.bin</project.npm.bin>
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.java.codeCoveragePlugin>jacoco</sonar.java.codeCoveragePlugin>
@@ -413,10 +414,13 @@
         <sonar.jacoco.reportPath>${project.testresult.directory}/coverage/jacoco/jacoco.exec</sonar.jacoco.reportPath>
         <sonar.jacoco.itReportPath>${project.testresult.directory}/coverage/jacoco/jacoco-it.exec</sonar.jacoco.itReportPath>
 
-        <sonar.javascript.lcov.reportPath>${project.testresult.directory}/coverage/saga/total-coverage.dat</sonar.javascript.lcov.reportPath>
-        <sonar.javascript.jstestdriver.reportsPath>${project.testresult.directory}/jasmine/</sonar.javascript.jstestdriver.reportsPath>
 
+        <sonar.sources>${project.basedir}/src/main/</sonar.sources>
+        <sonar.tests>${project.basedir}/src/test/</sonar.tests>
+        <sonar.javascript.lcov.reportPath>${project.testresult.directory}/coverage/report-lcov/lcov.info</sonar.javascript.lcov.reportPath>
+        <sonar.javascript.jstestdriver.reportsPath>${project.testresult.directory}/karma</sonar.javascript.jstestdriver.reportsPath>
 
+        <sonar.exclusions>src/main/webapp/assets/**.*</sonar.exclusions>
         <!-- Configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
@@ -938,6 +942,18 @@
                 </configuration>
             </plugin>
             <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.6.1</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${project.basedir}/node_modules/karma-phantomjs-launcher</directory>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <version>${maven.enforcer.version}</version>
@@ -1047,11 +1063,25 @@
                         <goals>
                             <goal>exec</goal>
                         </goals>
+                        <configuration>
+                            <executable>${project.npm.bin}/grunt</executable>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>install-phantomjs</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>install</argument>
+                                <argument>karma-phantomjs-launcher</argument>
+                            </arguments>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <executable>grunt</executable>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
@@ -1105,6 +1135,23 @@
                     </configuration>
                 </plugin>
                 <plugin>
+                    <groupId>com.kelveden</groupId>
+                    <artifactId>maven-karma-plugin</artifactId>
+                    <version>1.6</version>
+                    <executions>
+                        <execution>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>start</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <karmaExecutable>${project.basedir}/node_modules/.bin/karma</karmaExecutable>
+                        <configFile>${project.basedir}/karma.ci.conf.js</configFile>
+                    </configuration>
+                </plugin>
+                <!-- <plugin>
                     <groupId>com.github.searls</groupId>
                     <artifactId>jasmine-maven-plugin</artifactId>
                     <version>1.3.1.6</version>
@@ -1127,17 +1174,18 @@
                             <source>${project.basedir}/src/main/webapp/TATAMI.CONCAT.js</source>
                             <source>${project.basedir}/src/main/webapp/assets/bower_components/angular-mocks/angular-mocks.js</source>
                             <source>${project.basedir}/src/main/webapp/assets/bower_components/angular-route/angular-route.min.js</source>
+
                         </preloadSources>
                         <jasmineTargetDir>${project.testresult.directory}/jasmine</jasmineTargetDir> 
-                        <!-- <jsSrcDir>src/main/webapp</jsSrcDir>
-                        <jsTestSrcDir>src/main/test/javascript</jsTestSrcDir -->>
+                        - <jsSrcDir>src/main/webapp</jsSrcDir>
+                        <jsTestSrcDir>src/main/test/javascript</jsTestSrcDir ->>
                         <sourceExcludes>
                             <exclude>**/bower_components/**/*.*</exclude>
                             <exclude>**/js/vendor/**/*.*</exclude>
                         </sourceExcludes> 
                     </configuration>
-                </plugin>
-                <plugin>
+                </plugin> -->
+                <!--  <plugin>
                     <groupId>com.github.timurstrekalov</groupId>
                     <artifactId>saga-maven-plugin</artifactId>
                     <version>1.5.4</version>
@@ -1155,7 +1203,7 @@
                         <skipTests>${skip.unit.tests}</skipTests>
                         <outputStrategy>BOTH</outputStrategy>
                     </configuration>
-                </plugin>
+                </plugin> -->
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
