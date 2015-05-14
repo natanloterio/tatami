@@ -440,10 +440,10 @@
         <hector.mapper.version>3.1-09</hector.mapper.version>
         <persistence.api.version>1.0.2</persistence.api.version>
         <javax.inject.version>1</javax.inject.version>
-        <javax.servlet.api.version>3.0.1</javax.servlet.api.version>
+        <javax.servlet.api.version>3.1.0</javax.servlet.api.version>
         <javax.validation.api.version>1.0.0.GA</javax.validation.api.version>
         <hibernate.validator.version>4.3.0.Final</hibernate.validator.version>
-        <jstl.version>1.2</jstl.version>
+        <jstl.version>1.2.1</jstl.version>
         <jackson.version>2.5.3</jackson.version>
         <jodatime.version>2.1</jodatime.version>
         <commons.lang.version>2.6</commons.lang.version>
@@ -454,7 +454,7 @@
         <cassandra.unit.version>1.2.0.1</cassandra.unit.version>
         <mockito.version>1.9.0</mockito.version>
         <rome.version>1.5.0</rome.version>
-        <pegdown.version>1.2.1</pegdown.version>
+        <pegdown.version>1.5.0</pegdown.version>
         <velocity.version>1.7</velocity.version>
         <yammer.metrics.version>2.2.0</yammer.metrics.version>
         <camel.version>2.11.0</camel.version>
@@ -468,7 +468,7 @@
         <maven.war.version>2.6</maven.war.version>
         <maven.jetty.version>9.3.0.M2</maven.jetty.version>
         <maven.cassandra.version>1.2.1-1</maven.cassandra.version>
-        <maven.wro4j.version>1.7.0</maven.wro4j.version>
+        <maven.wro4j.version>1.7.7</maven.wro4j.version>
         <maven-eclipse-plugin.version>2.9</maven-eclipse-plugin.version>
         <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
     </properties>
@@ -578,8 +578,8 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>javax.servlet.jsp.jstl-api</artifactId>
             <version>${jstl.version}</version>
         </dependency>
         <dependency>
