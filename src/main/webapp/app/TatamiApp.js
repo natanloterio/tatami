@@ -13,7 +13,8 @@ var TatamiApp = angular.module('TatamiApp', [
     'ui.bootstrap',
     'mentio',
     'LocalStorageModule',
-    'bm.bsTour'
+    'bm.bsTour',
+    'ngIdle',
 ]);
 
 TatamiApp.run(['$rootScope', '$state', function($rootScope, $state) {
@@ -23,7 +24,9 @@ TatamiApp.run(['$rootScope', '$state', function($rootScope, $state) {
         }
     });
 }]);
-
+TatamiApp.run(['Idle', function(Idle) {
+    Idle.watch();
+}]);
 TatamiApp.run(['$rootScope', '$state', '$stateParams', 'AuthenticationService', 'UserSession', function($rootScope, $state, $stateParams, AuthenticationService, UserSession) {
     // Make state information available to $rootScope, and thus $scope in our controllers
     $rootScope.$state = $state;
@@ -93,7 +96,26 @@ TatamiApp.run(['$rootScope', '$state', '$stateParams', 'AuthenticationService', 
         $state.go('tatami.login.main');
     });
 }]);
+TatamiApp.config('IdleProvider','KeepaliveProvider', function(IdleProvider, KeepaliveProvider) {
+    IdleProvider.idle(90);
+    IdleProvider.timeout(60);
+    KeepaliveProvider.interval(60);
+    KeepaliveProvider.http('/api/heartbeat');
+});
 
+TatamiApp.run('$rootScope','$http',function($rootScope, $http) {
+    $rootScope.$on('IdleStart', function() {
+        alert("You are about to be logged out for inactivity.");
+    });
+    $rootScope.$on('IdleTimeout', function() {
+        $http.get('/tatami/logout')
+            .success(function() {
+                UserSession.clearSession();
+                $scope.$state.go('tatami.login.main');
+                $scope.searchString = '';
+            });
+    });
+});
 TatamiApp.config(['$resourceProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider',
     function($resourceProvider, $locationProvider, $urlRouterProvider, $stateProvider) {
 

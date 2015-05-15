@@ -9,6 +9,7 @@ module.exports = function(grunt) {
                 files: {
                     'src/main/webapp/TATAMI.CONCAT.js': [
                         "src/main/webapp/assets/bower_components/angular/angular.min.js",
+                        "src/main/webapp/assets/bower_components/ng-idle/angular-idle.js",
                         "src/main/webapp/assets/bower_components/angular-touch/angular-touch.min.js",
                         "src/main/webapp/assets/bower_components/angular-resource/angular-resource.min.js",
                         "src/main/webapp/assets/bower_components/angular-sanitize/angular-sanitize.min.js",
